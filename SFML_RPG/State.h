@@ -3,6 +3,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
