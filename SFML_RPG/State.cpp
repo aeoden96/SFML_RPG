@@ -17,6 +17,14 @@ const bool & State::getQuit() const
 	return this->quit;
 }
 
+void State::updateMousePositions()
+{
+	this->mousePosScreen = sf::Mouse::getPosition();
+	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
+	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition());
+
+}
+
 
 void State::checkForQuit()
 {

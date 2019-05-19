@@ -1,5 +1,13 @@
 #include "MainMenuState.h"
 
+void MainMenuState::initFonts()
+{
+	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
+	{
+		throw("ERROR::MAINMENUSTATE:: Could not load font ");
+	}
+}
+
 void MainMenuState::initKeybinds()
 {
 
@@ -24,6 +32,7 @@ void MainMenuState::initKeybinds()
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
 	:State(window, supportedKeys)
 {
+	this->initFonts();
 	this->initKeybinds();
 	this->background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 	this->background.setFillColor(sf::Color::Magenta);
@@ -54,9 +63,11 @@ void MainMenuState::updateInput(const float & dt)
 
 void MainMenuState::update(const float& dt)
 {
+	this->updateMousePositions();
 	this->updateInput(dt);
-
 	
+	system("cls");
+	std::cout << this->mousePosView.x << " " << this->mousePosView.y << "\n";
 
 }
 
