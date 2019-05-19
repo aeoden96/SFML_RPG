@@ -26,11 +26,20 @@ public:
 
 
 	//Functions
+
+	//Regular
+	void endApplication();
+
+	//Update
 	void updateDt();
 	void update();
-	void render();
-	void run();
 	void updateSFMLEvents();
+
+	//Render
+	void render();
+	
+	//Core
+	void run();
 
 };
 
