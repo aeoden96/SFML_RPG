@@ -23,8 +23,8 @@ void GameState::initKeybinds()
 
 }
 
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	:State(window,supportedKeys)
+GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	:State(window,supportedKeys,states)
 {
 	this->initKeybinds();
 }
@@ -32,12 +32,13 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 
 GameState::~GameState()
 {
+	std::cout << "\n" << "GameState destr";
 }
 
 
 void GameState::endState()
 {
-	std::cout << "Ending game state\n";
+	std::cout << "\nEnding GameState";
 }
 
 void GameState::updateInput(const float & dt)

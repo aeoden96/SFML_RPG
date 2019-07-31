@@ -59,7 +59,8 @@ void Game::initKeys()
 
 void Game::initStates()
 {
-	this->states.push(new MainMenuState(this->window, &this->supportedKeys));
+	std::cout << "\n" << "Game --- init states";
+	this->states.push(new MainMenuState(this->window, &this->supportedKeys,&this->states));//need to send adress of states stack
 	//this->states.push(new GameState(this->window,&this->supportedKeys));
 }
 
@@ -68,6 +69,7 @@ void Game::initStates()
 //Constructors
 Game::Game()
 {
+	std::cout << "\n" << "Game --- constr";
 	this->initWindow();
 	this->initKeys();
 	this->initStates();
@@ -76,6 +78,7 @@ Game::Game()
 //Destructors
 Game::~Game()
 {
+	std::cout << "\n" << "Game --- destr";
 	delete this->window;
 	while (!this->states.empty())
 	{
@@ -90,7 +93,7 @@ Game::~Game()
 
 void Game::endApplication()
 {
-	std::cout << "Ending app\n";
+	std::cout << "\nEnding app function (blank)";
 }
 
 void Game::updateDt()
