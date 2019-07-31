@@ -28,12 +28,12 @@ public:
 	State(sf::RenderWindow* window,std::map<std::string,int>* supportedKeys, std::stack<State*>* states);
 	virtual ~State();
 
-	virtual void checkForQuit();
+	
 
 	const bool& getQuit() const;
-
+	
 	/*needs to be defined in child classes of State*/
-	virtual void endState()=0;
+    void endState();
 	virtual void updateMousePositions();
 	virtual void updateInput(const float& dt) = 0;
 	virtual void update(const float& dt)=0;

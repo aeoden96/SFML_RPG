@@ -18,15 +18,21 @@
 class Entity
 {
 private:
-
+	void initVariables();
 
 protected:
-	sf::RectangleShape shape;//placeholder
+	sf::Texture* texture;
+	sf::Sprite* sprite;
+
+	//sf::RectangleShape shape; //placeholder
 	float movementSpeed;
 
 public:
 	Entity();
+
 	virtual ~Entity();
+	//Component functions
+	void createSprite(sf::Texture* texture);
 
 	//Functions
 

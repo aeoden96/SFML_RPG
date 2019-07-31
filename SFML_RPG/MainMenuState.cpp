@@ -96,15 +96,9 @@ MainMenuState::~MainMenuState()
 
 }
 
-void MainMenuState::endState()
-{
-	std::cout << "Ending MainMenuState(blank)\n";
-}
-
 void MainMenuState::updateInput(const float & dt)
 {
-	//at this time, Close key is defined
-	this->checkForQuit();
+	
 
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) 
 	//{
@@ -135,7 +129,7 @@ void MainMenuState::updateButtons()
 	//Quit the game
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
-		this->quit =true;
+		this->endState();
 	}
 }
 
