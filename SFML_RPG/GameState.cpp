@@ -35,7 +35,7 @@ void GameState::initTextures()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(0, 0,&this->textures["PLAYER_IDLE"]);
+	this->player = new Player(0, 0,this->textures["PLAYER_IDLE"]);
 
 }
 
@@ -82,9 +82,9 @@ void GameState::updateInput(const float & dt)
 void GameState::update(const float& dt)
 {
 	this->updateMousePositions();
-	this->updateInput(dt);
 
-	this->player->update(dt);
+	this->updateInput(dt); //update keyboard player movement
+	this->player->update(dt); //update other
 
 }
 

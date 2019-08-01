@@ -2,14 +2,14 @@
 
 #include "MovementComponent.h"
 
-class Entity
+class Entity //EVERY ENITIY HAS ITS SPRITE
 {
 private:
 	void initVariables();
 
 protected:
-	sf::Texture* texture;
-	sf::Sprite* sprite;
+	
+	sf::Sprite sprite;
 
 	//sf::RectangleShape shape; //placeholder
 	MovementComponent* movementComponent;
@@ -19,7 +19,7 @@ public:
 
 	virtual ~Entity();
 	//Component functions
-	void createSprite(sf::Texture* texture);
+	void setTexture(sf::Texture& texture);
 	void createMovementComponent(const float maxVelocity);
 
 	//Functions

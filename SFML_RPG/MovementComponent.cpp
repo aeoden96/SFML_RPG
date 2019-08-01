@@ -2,7 +2,8 @@
 
 
 //Konstr/destr
-MovementComponent::MovementComponent(float maxVelocity):maxVelocity(maxVelocity)
+MovementComponent::MovementComponent(sf::Sprite& sprite,float maxVelocity)
+	:sprite(sprite),maxVelocity(maxVelocity)
 {
 }
 
@@ -18,10 +19,13 @@ const sf::Vector2f & MovementComponent::getVelocity() const
 
 
 //Functions
-void MovementComponent::move(const float dir_x, const float dir_y)
+//sets directional velocity
+void MovementComponent::move(const float dir_x, const float dir_y,const float &dt)
 {
 	this->velocity.x = this->maxVelocity * dir_x;
 	this->velocity.y = this->maxVelocity * dir_y;
+
+	this->sprite.move(this->velocity * dt);//uses velocity
 
 }
 
