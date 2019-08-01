@@ -21,6 +21,11 @@ void GameState::initKeybinds()
 	}
 	ifs.close();
 
+	std::cout << "\nGameState:Keybinds map: \n";
+	for (auto i : this->keybinds)
+	{
+		std::cout << "   > " << i.first << " " << i.second << "\n";
+	}
 }
 
 void GameState::initTextures()

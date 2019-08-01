@@ -14,7 +14,8 @@ State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys
 
 State::~State()
 {
-	std::cout << "\n" << "State destr";
+	std::cout << "\n" << "State destr"; 
+
 }
 
 const bool & State::getQuit() const

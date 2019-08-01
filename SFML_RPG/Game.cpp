@@ -69,10 +69,10 @@ void Game::initKeys()
 	}
 	ifs.close();
 
-
+	std::cout << "SupportedKeys map: \n";
 	for (auto i: this->supportedKeys)
 	{
-		std::cout << i.first << " " << i.second << "\n";
+		std::cout << "   > " << i.first << " " << i.second << "\n";
 	}
 
 
@@ -92,7 +92,7 @@ void Game::initStates()
 //Constructors
 Game::Game()
 {
-	std::cout << "\n" << "Game --- constr";
+	std::cout << "\n" << "Game --- constr \n";
 	this->initVariables();
 	this->initWindow();
 	this->initKeys();

@@ -31,13 +31,11 @@ void MovementComponent::move(const float dir_x, const float dir_y,const float &d
 
 	if (this->velocity.x > 0.f) //check for right 
 	{
-		if (this->velocity.x > this->maxVelocity)
-			this->velocity.x = this->maxVelocity;
+		
 	}
 	else if (this->velocity.x < 0.f) //check for left
 	{
-		if (this->velocity.x < -this->maxVelocity)
-			this->velocity.x = -this->maxVelocity;
+		
 	}
 
 	this->velocity.y += this->acceleration * dir_y;
@@ -48,18 +46,54 @@ void MovementComponent::move(const float dir_x, const float dir_y,const float &d
 
 void MovementComponent::update(const float & dt)
 {
-	//deceletation
-	if (this->velocity.x > 0.f) //check for right 
+	/*
+	Decelerates the sprite and controls max velocity.
+	Moves the sprite.
+	*/
+	if (this->velocity.x > 0.f) //check for positive x 
 	{
+		//maxVelocity check x positive
+		if (this->velocity.x > this->maxVelocity)
+			this->velocity.x = this->maxVelocity;
+
+		//Deceleration x positive
 		this->velocity.x -= deceleration;
 		if (this->velocity.x < 0.f)
 			this->velocity.x = 0.f;
+
 	}
-	else if (this->velocity.x < 0.f)
+	else if (this->velocity.x < 0.f)//check for negative x 
 	{
+		//maxVelocity check x negative
+		if (this->velocity.x < -this->maxVelocity)
+			this->velocity.x = -this->maxVelocity;
+		//Deceleration x negative
 		this->velocity.x += deceleration;
 		if (this->velocity.x > 0.f)
 			this->velocity.x = 0.f;
+	}
+
+	if (this->velocity.y > 0.f) //check for positive y 
+	{
+		//maxVelocity check y positive
+		if (this->velocity.y > this->maxVelocity)
+			this->velocity.y = this->maxVelocity;
+
+		//Deceleration y positive
+		this->velocity.y -= deceleration;
+		if (this->velocity.y < 0.f)
+			this->velocity.y = 0.f;
+
+	}
+	else if (this->velocity.y < 0.f)//check for negative y 
+	{
+		//maxVelocity check y negative
+		if (this->velocity.y < -this->maxVelocity)
+			this->velocity.y = -this->maxVelocity;
+		//Deceleration y negative
+		this->velocity.y += deceleration;
+		if (this->velocity.y > 0.f)
+			this->velocity.y = 0.f;
 	}
 
 	//final move
