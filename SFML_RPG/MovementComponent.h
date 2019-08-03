@@ -36,6 +36,7 @@ public:
 	const sf::Vector2f& getVelocity() const;
 
 	//Functions
+	const bool idle() const;
 	void move(const float x, const float y, const float &dt);
 	void update(const float& dt);
 
