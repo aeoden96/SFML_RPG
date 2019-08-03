@@ -15,6 +15,9 @@
 #include "SFML/Audio.hpp"
 #include "SFML/Network.hpp"
 
+
+enum movement_states {IDLE = 0 , MOVING, MOVING_LEFT ,MOVING_RIGHT, MOVING_UP , MOVING_DOWN};
+
 class MovementComponent //IS SPRITE DEPENDENT
 {
 private:
@@ -36,7 +39,8 @@ public:
 	const sf::Vector2f& getVelocity() const;
 
 	//Functions
-	const bool idle() const;
+	const bool getState(const short unsigned state) const;
+
 	void move(const float x, const float y, const float &dt);
 	void update(const float& dt);
 

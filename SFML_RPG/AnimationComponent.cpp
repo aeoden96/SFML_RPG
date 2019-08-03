@@ -1,7 +1,7 @@
 #include "AnimationComponent.h"
 
 AnimationComponent::AnimationComponent(sf::Sprite & sprite, sf::Texture & textureSheet)
-	:sprite(sprite),textureSheet(textureSheet)
+	:sprite(sprite),textureSheet(textureSheet),lastAnimation(NULL)
 {
 }
 
@@ -27,5 +27,20 @@ void AnimationComponent::addAnimation(
 
 void AnimationComponent::play(const std::string key, const float & dt)
 {
+
+	//resetting animation sequence every time another animation comes ( etc. idle -> moving )
+	if (this->lastAnimation != this->animations[key])
+	{
+		if (this->lastAnimation == NULL)
+		{
+			this->lastAnimation = this->animations[key];
+		}
+		else
+		{
+			this->lastAnimation->reset();
+			this->lastAnimation= this->animations[key];
+
+		}
+	}
 	this->animations[key]->play(dt);
 }
