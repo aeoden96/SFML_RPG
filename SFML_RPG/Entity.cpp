@@ -4,8 +4,9 @@
 void Entity::initVariables()
 {
 	
-
+	this->hitboxComponent = NULL;
 	this->movementComponent = NULL;
+	this->animationComponent = NULL;
 }
 
 Entity::Entity()
@@ -16,6 +17,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+	delete this->hitboxComponent;
 	delete this->movementComponent;
 	delete this->animationComponent;
 }

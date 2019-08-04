@@ -37,12 +37,14 @@ private:
 		{
 		
 			this->timer = 0.f;
+			//s lijeva slike pocne od <start_frame_x * width> npr od 0, ili od 1*width
+			//od vrha slike pocne od <start_frame_y * height> npr od 0 ili od 1*height
 			this->startRect = sf::IntRect(start_frame_x * width, start_frame_y * height, width, height);
 			this->currentRect = this->startRect;
 			this->endRect = sf::IntRect(frames_x * width, frames_y * height, width, height);
 
 			this->sprite.setTexture(this->textureSheet,true);//in case of error,set true?
-			this->sprite.setTextureRect(this->startRect);
+			this->sprite.setTextureRect(this->startRect);//we want to display just the part of the texture
 		}
 
 		//Functions

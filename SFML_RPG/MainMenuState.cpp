@@ -26,7 +26,7 @@ void MainMenuState::initFonts()
 	std::cout << "\n" << "---MainMenuState initFonts  ";
 	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
 	{
-		throw("ERROR::MAINMENUSTATE:: Could not load font ");
+		throw("ERROR::MAINMENUSTATE::COULD_NOT_LOAD_FONT");
 	}
 }
 
@@ -90,14 +90,11 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
 	:State(window, supportedKeys,states)
 {
 	std::cout << "\n" << "MainMenuState constr : " ;
-	this->initVariables();
+	this->initVariables(); //no vars
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
-
-
-	
 }
 
 MainMenuState::~MainMenuState()
@@ -113,15 +110,11 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::updateInput(const float & dt)
 {
-	
+	//no keyboard buttons defined for main menu
 
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) 
-	//{
-	//	
-	//}
-
-
-
+	//exit with ESC is too fast 
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))))
+		this->endState();*/
 }
 
 void MainMenuState::updateButtons()

@@ -1,5 +1,7 @@
 #pragma once
 
+
+#include "HitboxComponent.h"
 #include "MovementComponent.h"
 #include "AnimationComponent.h"
 
@@ -13,6 +15,7 @@ protected:
 	sf::Sprite sprite;
 
 	//sf::RectangleShape shape; //placeholder
+	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
 	AnimationComponent* animationComponent;
 

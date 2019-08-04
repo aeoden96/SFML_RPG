@@ -33,7 +33,7 @@ void GameState::initTextures()
 
 	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/player_sheet.png"))
 	{
-		throw "ERROR:GAME_STATE:COULD_NOT_LOAD_PLAYER_IDLE_TEXTURE";
+		throw "ERROR:GAME_STATE:COULD_NOT_LOAD_PLAYER_TEXTURE";
 	}
 
 
@@ -67,9 +67,7 @@ GameState::~GameState()
 
 void GameState::updateInput(const float & dt)
 {
-	//at this time, Close key is defined
 	
-
 	//Update player input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 		this->player->move(-1.f, 0.f, dt);
