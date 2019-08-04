@@ -1,7 +1,7 @@
 #include "AnimationComponent.h"
 
 AnimationComponent::AnimationComponent(sf::Sprite & sprite, sf::Texture & textureSheet)
-	:sprite(sprite),textureSheet(textureSheet),lastAnimation(NULL)
+	:sprite(sprite),textureSheet(textureSheet),lastAnimation(NULL),priorityAnimation(NULL)
 {
 }
 
@@ -25,22 +25,108 @@ void AnimationComponent::addAnimation(
 		frames_x, frames_y, width, height);
 }
 
-void AnimationComponent::play(const std::string key, const float & dt)
+void AnimationComponent::play(const std::string key, const float & dt,const bool priority)
 {
 
-	//resetting animation sequence every time another animation comes ( etc. idle -> moving )
-	if (this->lastAnimation != this->animations[key])
+	if (this->priorityAnimation)//if there is a priority animation
 	{
-		if (this->lastAnimation == NULL)
+		if (this->priorityAnimation == this->animations[key])
 		{
-			this->lastAnimation = this->animations[key];
-		}
-		else
-		{
-			this->lastAnimation->reset();
-			this->lastAnimation= this->animations[key];
+			//resetting animation sequence every time another animation comes ( etc. idle -> moving )
+			if (this->lastAnimation != this->animations[key])
+			{
+				if (this->lastAnimation == NULL)
+				{
+					this->lastAnimation = this->animations[key];
+				}
+				else
+				{
+					this->lastAnimation->reset();
+					this->lastAnimation = this->animations[key];
 
+				}
+			}
+			//if priority animation is done, remove it
+			if (this->animations[key]->play(dt)) //WHEN play() returns done = true
+			{
+				this->priorityAnimation = NULL;
+			}
 		}
 	}
-	this->animations[key]->play(dt);
+	else //play animation if no other priority animation is set
+	{
+		//if this is priority animation,set it
+		if (priority)
+		{
+			this->priorityAnimation = this->animations[key];
+		}
+
+		//resetting animation sequence every time another animation comes ( etc. idle -> moving )
+		if (this->lastAnimation != this->animations[key])
+		{
+			if (this->lastAnimation == NULL)
+			{
+				this->lastAnimation = this->animations[key];
+			}
+			else
+			{
+				this->lastAnimation->reset();
+				this->lastAnimation = this->animations[key];
+
+			}
+		}
+		this->animations[key]->play(dt);
+	}
+}
+
+void AnimationComponent::play(const std::string key, const float & dt, const float & modifier, const float & modifier_max, const bool priority)
+{
+	if (this->priorityAnimation)//if there is a priority animation
+	{
+		if (this->priorityAnimation == this->animations[key])
+		{
+			//resetting animation sequence every time another animation comes ( etc. idle -> moving )
+			if (this->lastAnimation != this->animations[key])
+			{
+				if (this->lastAnimation == NULL)
+				{
+					this->lastAnimation = this->animations[key];
+				}
+				else
+				{
+					this->lastAnimation->reset();
+					this->lastAnimation = this->animations[key];
+
+				}
+			}
+			//if priority animation is done, remove it
+			if (this->animations[key]->play(dt)) //WHEN play() returns done = true
+			{
+				this->priorityAnimation = NULL;
+			}
+		}
+	}
+	else //play animation if no other priority animation is set
+	{
+		//if this is priority animation,set it
+		if (priority)
+		{
+			this->priorityAnimation = this->animations[key];
+		}
+		//resetting animation sequence every time another animation comes ( etc. idle -> moving )
+		if (this->lastAnimation != this->animations[key])
+		{
+			if (this->lastAnimation == NULL)
+			{
+				this->lastAnimation = this->animations[key];
+			}
+			else
+			{
+				this->lastAnimation->reset();
+				this->lastAnimation = this->animations[key];
+
+			}
+		}
+		this->animations[key]->play(dt, abs(modifier / modifier_max));
+	}
 }
