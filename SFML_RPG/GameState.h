@@ -1,9 +1,11 @@
 #pragma once
 #include "State.h"
+#include "PauseMenu.h"
 class GameState : public State
 {
 private:
 	Player* player;
+	PauseMenu pmenu;
 	//Functions
 
 	void initKeybinds();

@@ -12,6 +12,7 @@ protected:
 	sf::RenderWindow* window;
 	std::map<std::string, int>* supportedKeys;
 	bool quit;
+	bool paused;
 	std::map<std::string, int> keybinds;
 
 	sf::Vector2i mousePosScreen;
@@ -34,6 +35,8 @@ public:
 	
 	/*needs to be defined in child classes of State*/
     void endState();
+	void pauseState();
+	void unpauseState();
 	virtual void updateMousePositions();
 	virtual void updateInput(const float& dt) = 0;
 	virtual void update(const float& dt)=0;
