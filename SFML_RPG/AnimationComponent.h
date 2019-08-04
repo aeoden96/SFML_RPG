@@ -23,6 +23,7 @@ private:
 		int width;
 		int height;
 		float timer;
+		bool done;
 		sf::IntRect startRect;
 		sf::IntRect currentRect;
 		sf::IntRect endRect;
@@ -32,7 +33,7 @@ private:
 			int start_frame_x, int start_frame_y,
 			int frames_x, int frames_y,
 			int width,int  height)
-			:sprite(sprite),textureSheet(textureSheet), 
+			:sprite(sprite),textureSheet(textureSheet), timer(0.f), done(false),
 			animationTimer(animationTimer),width(width),height(height)
 		{
 		
@@ -46,13 +47,16 @@ private:
 			this->sprite.setTexture(this->textureSheet,true);//in case of error,set true?
 			this->sprite.setTextureRect(this->startRect);//we want to display just the part of the texture
 		}
-
+		//Accessors
+		const bool& isDone()const {
+			return this->done;
+		}
 		//Functions
-		bool play(const float& dt) 
+		const bool& play(const float& dt) 
 		{
 			this->timer += 100.f * dt;
 			//update timer
-			bool done = false;  // tells when animation is done with all slides
+			this->done = false;
 			if (this->timer >= this->animationTimer)
 			{
 				//reset timer
@@ -65,23 +69,23 @@ private:
 				else //Reset
 				{
 					this->currentRect.left = this->startRect.left;
-					done = true;
+					this->done = true;
 				}
 
 				this->sprite.setTextureRect(this->currentRect);
 
 			}
 
-			return done;
+			return this->done;
 		}
 
-		bool play(const float& dt,  float mod_percent)
+		const bool& play(const float& dt,  float mod_percent)
 		{
 			if (mod_percent < 0.5f)
 			{
 				mod_percent = 0.5f;
 			}
-			bool done = false;
+			this->done = false;
 			this->timer += mod_percent * 100.f * dt;
 			//update timer
 			if (this->timer >= this->animationTimer)
@@ -96,13 +100,13 @@ private:
 				else //Reset
 				{
 					this->currentRect.left = this->startRect.left;
-					done = true;
+					this->done = true;
 				}
 
 				this->sprite.setTextureRect(this->currentRect);
 
 			}
-			return done; 
+			return this->done; 
 		}
 		
 		void reset() {
@@ -121,6 +125,9 @@ private:
 public:
 	AnimationComponent(sf::Sprite& sprite,sf::Texture& textureSheet);
 	virtual ~AnimationComponent();
+	//Accesors
+
+	const bool& isDone(const std::string key);
 
 	//Functions
 	void addAnimation(const std::string key,
@@ -133,8 +140,8 @@ public:
 	void pauseAnimation(const std::string animation);
 	void resetAnimation(const std::string animation);*/
 
-	void play(const std::string key,const float& dt, const bool priority = false);
-	void play(const std::string key, const float& dt,const float& modifier, const float& modifier_max, const bool priority = false);
+	const bool&  play(const std::string key,const float& dt, const bool priority = false);
+	const bool&  play(const std::string key, const float& dt,const float& modifier, const float& modifier_max, const bool priority = false);
 
 };
 

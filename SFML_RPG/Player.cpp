@@ -22,8 +22,10 @@ Player::Player(float x,float y, sf::Texture& textureSheet)
 
 	this->createHitboxComponent(this->sprite,30.f,70.f, 587.f * 0.5f * 0.65f, 707.f * 0.5f * 0.73f);
 	this->createMovementComponent(300.f, 15.f, 5.f);
-	this->createAnimationComponent(textureSheet);
 
+	this->sprite.setScale(PLAYER_SIZE_FACTOR,PLAYER_SIZE_FACTOR);
+	
+	this->createAnimationComponent(textureSheet);
 	this->animationComponent->addAnimation("IDLE" , 10.f , 0, 0 ,9,0 ,587,707);
 	this->animationComponent->addAnimation("WALK", 7.f, 0, 1, 9, 1, 587, 707);
 	this->animationComponent->addAnimation("ATTACK", 7.f, 0, 2, 9, 2, 587, 707);
@@ -38,9 +40,7 @@ Player::~Player()
 //Functions
 void Player::update(const float & dt)
 {
-	const float PLAYER_SIZE_FACTOR = 0.5f;
-
-	this->movementComponent->update(dt);
+	this->movementComponent->update(dt); //calculates velocity and MOVES the sprite
 	
 	/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
@@ -49,7 +49,10 @@ void Player::update(const float & dt)
 
 	if (this->attacking)
 	{
-		this->animationComponent->play("ATTACK", dt, true);
+		if (this->animationComponent->play("ATTACK", dt, true))//when attack animation is done, set attacking to false
+		{
+			this->attacking = false;
+		}
 	}
 
 	//we are defining what animation to see when player is moving in ? direction

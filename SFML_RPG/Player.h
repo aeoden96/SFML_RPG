@@ -7,6 +7,7 @@ class Player :
 private:
 	//Variables
 	bool attacking;
+	const float PLAYER_SIZE_FACTOR = 0.5f;
 
 	//Initializer funcions
 	void initVariables();
