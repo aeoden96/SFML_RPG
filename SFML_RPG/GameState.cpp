@@ -28,6 +28,17 @@ void GameState::initKeybinds()
 	}
 }
 
+
+void GameState::initFonts()
+{
+
+	std::cout << "\n" << "---MainMenuState initFonts  ";
+	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
+	{
+		throw("ERROR::GameState::COULD_NOT_LOAD_FONT");
+	}
+}
+
 void GameState::initTextures()
 {
 
@@ -45,14 +56,22 @@ void GameState::initPlayers()
 
 }
 
+void GameState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+}
+
 
 //Const/destr
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window,supportedKeys,states),pmenu(*window)
+	:State(window,supportedKeys,states)
 {
 	this->initKeybinds();
+	this->initFonts();
 	this->initTextures();
+	this->initPauseMenu();
 	this->initPlayers();
+
 }
 
 
@@ -60,12 +79,24 @@ GameState::~GameState()
 {
 	std::cout << "\n" << "GameState destr";
 	delete this->player;
+	delete this->pmenu;
 }
 
 
 
 
 void GameState::updateInput(const float & dt)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))))
+	{
+		if (!this->paused)
+			this->pauseState();
+		else
+			this->unpauseState();
+	}
+}
+
+void GameState::updatePlayerInput(const float & dt)
 {
 	
 	//Update player input
@@ -77,32 +108,27 @@ void GameState::updateInput(const float & dt)
 		this->player->move( 0.f, -1.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 		this->player->move(0.f, 1.f,dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))))
-	{
-		if (!this->paused)
-			this->pauseState();
-		/*else
-			this->unpauseState();*/
-	}
+
 
 }
 
 
 void GameState::update(const float& dt)
 {
-	if (!this->paused)  //Unpaused update
+	this->updateMousePositions();
+	this->updateInput(dt);
+
+	if (!this->paused) //unpaused update
 	{
-		this->updateMousePositions();
+		this->updatePlayerInput(dt); //update keyboard player movement
 
-		this->updateInput(dt); //update keyboard player movement
 		this->player->update(dt); //update other
-
 	}
 	else //Paused update
 	{
 		if (this->paused)
 		{
-			this->pmenu.update();
+			this->pmenu->update();
 		}
 	}
 
@@ -118,7 +144,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	if (this->paused)//Pause menu render
 	{
-		this->pmenu.render(*target);
+		this->pmenu->render(*target);
 	}
 	
 
