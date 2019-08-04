@@ -18,6 +18,9 @@ public:
 	virtual ~Player();
 
 	//Functions
+	void updateAnimation(const float& dt);
+	void updateAttack();
+
 	virtual void update(const float& dt);
 };
 
