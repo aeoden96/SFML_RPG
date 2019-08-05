@@ -68,6 +68,10 @@ void SettingsState::initButtons()
 		sf::Color(150, 150, 150, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
+	std::string li[] = {"123", "3445","aafa","fagsgh","faw2"};
+
+	this->ddl = new gui::DropDownList(100,100,200,50,font,li,5);
+
 }
 
 
@@ -91,6 +95,8 @@ SettingsState::~SettingsState()
 	{
 		delete it->second;
 	}
+
+	delete this->ddl;
 }
 
 //Functions
@@ -120,6 +126,8 @@ void SettingsState::updateButtons()
 	{
 		this->endState();
 	}
+
+	
 }
 
 void SettingsState::update(const float& dt)
@@ -132,7 +140,7 @@ void SettingsState::update(const float& dt)
 
 	//std::cout << this->mousePosView.x << " " << this->mousePosView.y << "\n";
 
-
+	this->ddl->update(this->mousePosView,dt);
 }
 
 void SettingsState::renderButtons(sf::RenderTarget& target)
@@ -155,16 +163,16 @@ void SettingsState::render(sf::RenderTarget* target)
 	this->renderButtons(*target);
 
 	//REMOVE LATER
-	sf::Text mouseText;
+	/*sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x, this->mousePosView.y + 20);
 	mouseText.setFont(this->font);
 	mouseText.setCharacterSize(12);
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
-	target->draw(mouseText);
+	target->draw(mouseText);*/
 
-
+	this->ddl->render(*target);
 
 
 }
