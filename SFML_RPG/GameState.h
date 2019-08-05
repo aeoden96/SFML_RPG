@@ -20,7 +20,7 @@ public:
 
 
 	//Functions
-
+	void updatePauseMenuButtons();
 	void updateInput(const float& dt);
 	void updatePlayerInput(const float& dt);
 	void update(const float& dt);

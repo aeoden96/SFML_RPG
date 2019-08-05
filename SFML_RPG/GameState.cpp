@@ -28,7 +28,6 @@ void GameState::initKeybinds()
 	}
 }
 
-
 void GameState::initFonts()
 {
 
@@ -59,8 +58,8 @@ void GameState::initPlayers()
 void GameState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
+	this->pmenu->addButton("QUIT" , 930.f ,"Quit");
 }
-
 
 //Const/destr
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
@@ -74,7 +73,6 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 
 }
 
-
 GameState::~GameState()
 {
 	std::cout << "\n" << "GameState destr";
@@ -82,12 +80,17 @@ GameState::~GameState()
 	delete this->pmenu;
 }
 
-
-
+void GameState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+	{
+		this->endState();
+	}
+}
 
 void GameState::updateInput(const float & dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))) && this->getKeytime())
 	{
 		if (!this->paused)
 			this->pauseState();
@@ -112,10 +115,10 @@ void GameState::updatePlayerInput(const float & dt)
 
 }
 
-
 void GameState::update(const float& dt)
 {
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
 
 	if (!this->paused) //unpaused update
@@ -128,7 +131,8 @@ void GameState::update(const float& dt)
 	{
 		if (this->paused)
 		{
-			this->pmenu->update();
+			this->pmenu->update(this->mousePosView);
+			this->updatePauseMenuButtons();
 		}
 	}
 
