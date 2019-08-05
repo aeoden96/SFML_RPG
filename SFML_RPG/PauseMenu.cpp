@@ -48,7 +48,7 @@ PauseMenu::~PauseMenu()
 	}
 }
 //Accessor
-std::map<std::string, Button*>& PauseMenu::getButtons()
+std::map<std::string, gui::Button*>& PauseMenu::getButtons()
 {
 	return this->buttons;
 }
@@ -66,7 +66,7 @@ void PauseMenu::addButton(const std::string key,float y, const std::string text)
 	float height = 50.f;
 	float x = this->container.getPosition().x + this->container.getSize().x / 2.f - width / 2.f;
 
-	this->buttons[key] = new Button(x, y, width,height,
+	this->buttons[key] = new gui::Button(x, y, width,height,
 		&this->font, text, 50,
 		sf::Color(150, 150, 150, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
