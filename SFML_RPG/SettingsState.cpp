@@ -63,9 +63,15 @@ void SettingsState::initGui()
 {
 
 
-	this->buttons["EXIT_STATE"] = new gui::Button(
+	this->buttons["BACK"] = new gui::Button(
 		60, 500, 150, 50,
 		&this->font, "Back", 50,
+		sf::Color(150, 150, 150, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	this->buttons["APPLY"] = new gui::Button(
+		60, 600, 150, 50,
+		&this->font, "Apply", 50,
 		sf::Color(150, 150, 150, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
@@ -129,9 +135,14 @@ void SettingsState::updateGui(const float & dt)
 
 	//button functionality
 	//Quit the game
-	if (this->buttons["EXIT_STATE"]->isPressed())
+	if (this->buttons["BACK"]->isPressed())
 	{
 		this->endState();
+	}
+	//apply selected settings
+	if (this->buttons["APPLY"]->isPressed())
+	{
+		
 	}
 
 	//drop down lists

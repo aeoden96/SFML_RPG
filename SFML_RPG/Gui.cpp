@@ -6,14 +6,20 @@
 gui::Button::Button(float x, float y, float width, float height,
 	sf::Font* font, std::string text,unsigned characterSize,
 	sf::Color textIdleColor, sf::Color textHoverColor, sf::Color textActiveColor,
-	sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor)
+	sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor,
+	sf::Color outlineIdleColor, sf::Color outlineHoverColor, sf::Color outlineActiveColor,
+	short unsigned id)
 	:font(font),
 	textIdleColor(textIdleColor), 
 	textHoverColor(textHoverColor), 
 	textActiveColor(textActiveColor),
 	idleColor(idleColor),
 	hoverColor(hoverColor),
-	activeColor(activeColor)
+	activeColor(activeColor),
+	outlineIdleColor(outlineIdleColor),
+	outlineHoverColor(outlineHoverColor),
+	outlineActiveColor(outlineActiveColor),
+	id(id)
 
 {
 	std::cout << "\n" << "Button constr : " << text;
@@ -22,6 +28,8 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->shape.setPosition(sf::Vector2f(x,y));
 	this->shape.setSize(sf::Vector2f(width, height));
 	this->shape.setFillColor(this->idleColor);
+	this->shape.setOutlineThickness(1.f);
+	this->shape.setOutlineColor(outlineIdleColor);
 	
 	//this->font = font;
 	this->text.setFont(*this->font);
@@ -52,10 +60,20 @@ const std::string gui::Button::getText() const
 	return this->text.getString();
 }
 
+const short unsigned & gui::Button::getId() const
+{
+	return this->id;
+}
+
 //Modifiers
 void gui::Button::setText(const std::string text)
 {
 	this->text.setString(text);
+}
+
+void gui::Button::setId(const short unsigned id)
+{
+	this->id = id;
 }
 
 //functions
@@ -80,18 +98,24 @@ void gui::Button::update(const sf::Vector2f& mousePos)
 	case BTN_HOVER:
 		this->shape.setFillColor(this->hoverColor);
 		this->text.setFillColor(this->textHoverColor);
+		this->shape.setOutlineColor(outlineHoverColor);
 		break;
 	case BTN_IDLE:
 		this->shape.setFillColor(this->idleColor);
 		this->text.setFillColor(this->textIdleColor);
+		this->shape.setOutlineColor(outlineIdleColor);
+
 		break;
 	case BTN_ACTIVE:
 		this->shape.setFillColor(this->activeColor);
 		this->text.setFillColor(this->textActiveColor);
+		this->shape.setOutlineColor(outlineActiveColor);
 		break;
 	default:
 		this->shape.setFillColor(sf::Color::Red);
 		this->text.setFillColor(sf::Color::Blue);
+		this->shape.setOutlineColor(sf::Color::Green);
+
 		break;
 	}
 
@@ -115,8 +139,9 @@ gui::DropDownList::DropDownList(float x,float y, float width, float height, sf::
 	this->activeElement = new gui::Button(
 		x, y, width, height,
 		&this->font, list[default_index], 14,
-		sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200)
+		sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+		sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 200)
 	);
 
 
@@ -127,7 +152,10 @@ gui::DropDownList::DropDownList(float x,float y, float width, float height, sf::
 				x, y + ((i+1)* height), width, height,
 				&this->font,list[i], 14,
 				sf::Color(255,255,255, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-				sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200)
+				sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
+				sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
+				i
+				
 			)
 		);
 
@@ -194,6 +222,7 @@ void gui::DropDownList::update(const sf::Vector2f & mousePos, const float& dt)
 			{
 				this->showList = false;
 				this->activeElement->setText(i->getText());
+				this->activeElement->setId(i->getId());
 			}
 		}
 	}
