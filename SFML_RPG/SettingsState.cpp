@@ -59,19 +59,20 @@ void SettingsState::initKeybinds()
 
 }
 
-void SettingsState::initButtons()
+void SettingsState::initGui()
 {
 
 
-	this->buttons["EXIT_STATE"] = new gui::Button(60, 400, 150, 50,
-		&this->font, "Quit", 50,
+	this->buttons["EXIT_STATE"] = new gui::Button(
+		60, 500, 150, 50,
+		&this->font, "Back", 50,
 		sf::Color(150, 150, 150, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	std::string li[] = {"123", "3445","aafa","fagsgh","faw2"};
+	std::string li[] = {"1920x1080", "800x600","640x480"};
 
-	this->ddl = new gui::DropDownList(100,100,200,50,font,li,5);
-
+	
+	this->dropDownLists["RESOLUTION"] = new gui::DropDownList(800,400,200,50,font , li ,3);
 }
 
 
@@ -83,7 +84,7 @@ SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
-	this->initButtons();
+	this->initGui();
 }
 
 
@@ -96,7 +97,12 @@ SettingsState::~SettingsState()
 		delete it->second;
 	}
 
-	delete this->ddl;
+	auto it2 = this->dropDownLists.begin();
+	for (it2 = this->dropDownLists.begin(); it2 != this->dropDownLists.end(); ++it2)
+	{
+		delete it2->second;
+	}
+	
 }
 
 //Functions
@@ -110,24 +116,33 @@ void SettingsState::updateInput(const float & dt)
 		this->endState();*/
 }
 
-void SettingsState::updateButtons()
+void SettingsState::updateGui(const float & dt)
 {
 
 
-	//updates all the buttons in the states and handles their functionality
+	//updates all the gui elements in the states and handles their functionality
+	//Buttons
 	for (auto &it : this->buttons) {
 		it.second->update(this->mousePosView);
 	}
 
 
-
+	//button functionality
 	//Quit the game
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
 		this->endState();
 	}
 
-	
+	//drop down lists
+
+	for (auto &it : this->dropDownLists) {
+		it.second->update(this->mousePosView,dt);
+	}
+
+	//drop down lists functionality
+	//...
+
 }
 
 void SettingsState::update(const float& dt)
@@ -135,19 +150,23 @@ void SettingsState::update(const float& dt)
 	this->updateMousePositions();
 	this->updateInput(dt);
 
-	this->updateButtons();
+	this->updateGui(dt);
 
 
 	//std::cout << this->mousePosView.x << " " << this->mousePosView.y << "\n";
 
-	this->ddl->update(this->mousePosView,dt);
+	
 }
 
-void SettingsState::renderButtons(sf::RenderTarget& target)
+void SettingsState::renderGui(sf::RenderTarget& target)
 {
 	//this->gamestate_btn->render(target);
 
 	for (auto &it : this->buttons) {
+		it.second->render(target);
+	}
+
+	for (auto &it : this->dropDownLists) {
 		it.second->render(target);
 	}
 }
@@ -160,19 +179,19 @@ void SettingsState::render(sf::RenderTarget* target)
 
 	target->draw(this->background);
 
-	this->renderButtons(*target);
+	this->renderGui(*target);
 
 	//REMOVE LATER
-	/*sf::Text mouseText;
+	sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x, this->mousePosView.y + 20);
 	mouseText.setFont(this->font);
 	mouseText.setCharacterSize(12);
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
-	target->draw(mouseText);*/
+	target->draw(mouseText);
 
-	this->ddl->render(*target);
+	
 
 
 }
