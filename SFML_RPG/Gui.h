@@ -55,6 +55,9 @@ namespace gui
 		//Modifiers
 		void setText(const std::string text);
 		void setId(const short unsigned id);
+
+		//Accessors
+		
 		//functions
 
 		void update(const sf::Vector2f& mousePos);
@@ -74,8 +77,9 @@ namespace gui
 		~DropDownList();
 
 		//Accessors
-		const bool getKeytime();
+		const unsigned short& getActiveElementId() const ;
 		//Functions
+		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2f& mousePos, const float& dt);
 		void render(sf::RenderTarget& target);
