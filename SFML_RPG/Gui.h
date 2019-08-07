@@ -1,15 +1,6 @@
 #pragma once
 
-#include<ctime>
-#include<cstdlib>
-#include<iostream>
-#include<sstream>
-#include<vector>
 
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Audio.hpp"
 
 enum button_states{BTN_IDLE=0, BTN_HOVER,BTN_ACTIVE};
 
