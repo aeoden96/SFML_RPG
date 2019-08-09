@@ -102,8 +102,8 @@ void SettingsState::initText()
 }
 
 
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window,supportedKeys,states)
+SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	:State(window,supportedKeys,states),gfxSettings(gfxSettings)
 {
 	std::cout << "\n" << "SettingsState constr : ";
 	this->initVariables(); //no vars
@@ -164,7 +164,9 @@ void SettingsState::updateGui(const float & dt)
 	if (this->buttons["APPLY"]->isPressed())
 	{
 		//TEST REMOVE LATER
-		this->window->create(this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()] ,"Test",sf::Style::Default);
+		this->gfxSettings.resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
+
+		this->window->create(this->gfxSettings.resolution ,this->gfxSettings.title ,sf::Style::Default);
 	}
 
 	//drop down lists

@@ -75,7 +75,7 @@ void Game::initKeys()
 void Game::initStates()
 {
 	std::cout << "\n" << "Game --- init states";
-	this->states.push(new MainMenuState(this->window, &this->supportedKeys,&this->states));//need to send adress of states stack
+	this->states.push(new MainMenuState(this->window,this->gfxSettings, &this->supportedKeys,&this->states));//need to send adress of states stack
 	//this->states.push(new GameState(this->window,&this->supportedKeys));
 }
 
