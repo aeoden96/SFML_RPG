@@ -11,7 +11,11 @@ void EditorState::initVariables()
 void EditorState::initBackground()
 {
 }
-
+void EditorState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+	this->pmenu->addButton("QUIT", 930.f, "Quit");
+}
 void EditorState::initFonts()
 {
 
@@ -58,15 +62,16 @@ void EditorState::initButtons()
 	
 }
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+EditorState::EditorState(StateData* stateData)
+	:State(stateData)
 {
-	std::cout << "\n" << "MainMenuState constr : ";
+	std::cout << "\n" << "EditoState constr : ";
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
+	this->initPauseMenu();
 
 
 
@@ -81,12 +86,20 @@ EditorState::~EditorState()
 		delete it->second;
 	}
 
+	delete this->pmenu;
+
 }
 
 void EditorState::updateInput(const float & dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))))
-		this->endState();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))) && this->getKeytime())
+	{
+		if (!this->paused)
+			this->pauseState();
+		else
+			this->unpauseState();
+	}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("Close"))))
 
 }
 
@@ -101,12 +114,28 @@ void EditorState::updateButtons()
 
 }
 
+void EditorState::updatPauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+		this->endState();
+}
+
 void EditorState::update(const float& dt)
 {
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
+	if (!this->paused)//unpaused
+	{
+		this->updateButtons();
 
-	this->updateButtons();
+	}
+	else //paused
+	{
+		this->pmenu->update(this->mousePosView);
+		this->updatPauseMenuButtons();
+	}
+
 
 
 	//std::cout << this->mousePosView.x << " " << this->mousePosView.y << "\n";
@@ -131,16 +160,21 @@ void EditorState::render(sf::RenderTarget* target)
 
 	this->renderButtons(*target);
 
+	this->map.render(*target);
+
+	if (this->paused)//Pause menu render
+	{
+		this->pmenu->render(*target);
+	}
 	//REMOVE LATER
-	/*sf::Text mouseText;
+	sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x, this->mousePosView.y + 20);
 	mouseText.setFont(this->font);
 	mouseText.setCharacterSize(12);
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
-	target->draw(mouseText);*/
-
+	target->draw(mouseText);
 
 
 

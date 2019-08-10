@@ -63,8 +63,8 @@ void GameState::initPauseMenu()
 }
 
 //Const/destr
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window,supportedKeys,states)
+GameState::GameState(StateData* stateData)
+	:State(stateData)
 {
 	this->initKeybinds();
 	this->initFonts();

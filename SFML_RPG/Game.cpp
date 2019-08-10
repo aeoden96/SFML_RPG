@@ -11,12 +11,24 @@ void Game::initVariables()
 {
 	this->window = NULL;
 	this->dt = 0.f;
+
+	this->gridSize = 50.f;
 	
 }
 
 void Game::initGraphicsSettings()
 {
 	this->gfxSettings.loadFromFile("Config/graphics.ini");
+}
+
+void Game::initStateData()
+{
+	this->stateData.window = this->window;
+	this->stateData.gfxSettings = &this->gfxSettings;
+	this->stateData.supportedKeys = &this->supportedKeys;
+	this->stateData.states = &this->states;
+	this->stateData.gridSize = this->gridSize;
+
 }
 
 
@@ -75,7 +87,7 @@ void Game::initKeys()
 void Game::initStates()
 {
 	std::cout << "\n" << "Game --- init states";
-	this->states.push(new MainMenuState(this->window,this->gfxSettings, &this->supportedKeys,&this->states));//need to send adress of states stack
+	this->states.push(new MainMenuState(&this->stateData));//need to send adress of states stack
 	//this->states.push(new GameState(this->window,&this->supportedKeys));
 }
 
@@ -89,6 +101,7 @@ Game::Game()
 	this->initGraphicsSettings();
 	this->initWindow();
 	this->initKeys();
+	this->initStateData();
 	this->initStates();
 
 }

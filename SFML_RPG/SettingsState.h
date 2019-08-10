@@ -9,7 +9,7 @@ private:
 	//Variables
 	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
-	GraphicsSettings& gfxSettings;
+	
 	sf::Font font;
 
 	std::map<std::string, gui::Button*> buttons;
@@ -28,7 +28,7 @@ private:
 	void initText();
 
 public:
-	SettingsState(sf::RenderWindow* window,  GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	SettingsState(StateData* stateData);
 	virtual ~SettingsState();
 	//Accessors
 

@@ -14,11 +14,11 @@ private:
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
 	GraphicsSettings gfxSettings;
-
+	StateData stateData;
 
 	sf::Clock dtClock;
 	float dt;
-
+	float gridSize;
 	std::stack<State*> states;
 
 	std::map<std::string, int > supportedKeys;
@@ -26,6 +26,7 @@ private:
 	//Initialization
 	void initVariables();
 	void initGraphicsSettings();
+	void initStateData();
 	void initWindow();
 	void initStates();
 	void initKeys();

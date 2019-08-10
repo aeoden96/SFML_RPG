@@ -1,6 +1,13 @@
 #pragma once
 #include "State.h"
 #include "Gui.h"
+#include "PauseMenu.h"
+#include "TileMap.h"
+
+class State;
+class Gui;
+class PauseMenu;
+class TileMap;
 
 class EditorState :
 	public State
@@ -8,16 +15,21 @@ class EditorState :
 private:
 	//Variables
 	sf::Font font;
+	PauseMenu* pmenu;
 
 	std::map<std::string, gui::Button*> buttons;
+
+	TileMap map;
+
 	//Functions
 	void initVariables();
 	void initBackground();
+	void initPauseMenu();
 	void initFonts();
 	void initKeybinds();
 	void initButtons(); //here,bcs not every state has buttons
 public:
-	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	EditorState(StateData* stateData);
 	virtual ~EditorState();
 
 
@@ -26,6 +38,7 @@ public:
 
 	void updateInput(const float& dt);
 	void updateButtons();
+	void updatPauseMenuButtons();
 	void update(const float& dt);
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);

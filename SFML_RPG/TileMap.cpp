@@ -5,6 +5,7 @@
 
 TileMap::TileMap()
 {
+	std::cout << "\n" << "TileMap KONSTR ";
 	this->gridSizeF = 50.f;
 	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
 	this->maxSize.x = 10;

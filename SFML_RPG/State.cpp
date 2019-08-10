@@ -1,19 +1,19 @@
 #include "stdafx.h"
 #include "State.h"
 
-State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+State::State(StateData* stateData)
 {
 
 	std::cout << "\n" << "State constr";
-
-	this->window = window;
+	this->stateData = stateData;
+	this->window = stateData->window;
+	this->states = stateData->states;
+	this->supportedKeys = stateData->supportedKeys;
 	this->quit = false;
-	this->states = states;
-	this->supportedKeys = supportedKeys;
 	this->paused = false;
 	this->keytime = 0.f;
 	this->keytimeMax = 10.f;
-
+	this->gridSize = stateData->gridSize;
 }	
 
 

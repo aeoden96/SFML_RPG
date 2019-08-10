@@ -18,7 +18,7 @@ private:
 	void initPlayers();
 	void initPauseMenu();
 public:
-	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	GameState(StateData* stateData);
 	virtual ~GameState();
 
 

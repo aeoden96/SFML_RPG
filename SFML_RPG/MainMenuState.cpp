@@ -87,8 +87,8 @@ void MainMenuState::initButtons()
 
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys,states),gfxSettings(gfxSettings)
+MainMenuState::MainMenuState(StateData* stateData)
+	:State(stateData)
 {
 	std::cout << "\n" << "MainMenuState constr : " ;
 	this->initVariables(); //no vars
@@ -132,17 +132,17 @@ void MainMenuState::updateButtons()
 	//New game
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
-		this->states->push(new GameState(this->window, this->supportedKeys,this->states));
+		this->states->push(new GameState(this->stateData));
 	}
 	//Settings
 	if (this->buttons["SETTINGS_STATE"]->isPressed())
 	{
-		this->states->push(new SettingsState(this->window, this->gfxSettings,this->supportedKeys, this->states));
+		this->states->push(new SettingsState(this->stateData));
 	}
 	//Editor state
 	if (this->buttons["EDITOR_STATE"]->isPressed())
 	{
-		this->states->push(new EditorState(this->window, this->supportedKeys, this->states));
+		this->states->push(new EditorState(this->stateData));
 	}
 
 	//Quit the game

@@ -9,7 +9,7 @@ class MainMenuState :
 {
 private:
 	//Variables
-	GraphicsSettings& gfxSettings;
+	
 	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
 	sf::Font font;
@@ -22,7 +22,7 @@ private:
 	void initKeybinds();
 	void initButtons(); //here,bcs not every state has buttons
 public:
-	MainMenuState(sf::RenderWindow* window,GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	MainMenuState(StateData* stateData);
 	virtual ~MainMenuState();
 
 
