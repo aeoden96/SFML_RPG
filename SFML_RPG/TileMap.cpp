@@ -12,24 +12,24 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 	this->maxSize.y = height;
 	this->layers = 1;
 
-	this->map.resize(this->maxSize.x);
+	/*instead of pushback, we are using resize to set values in the map at once*/
+	this->map.resize(this->maxSize.x , std::vector<  std::vector<Tile*>>());
+
 	for (size_t x = 0; x < this->maxSize.x; x++)
 	{
-		this->map.push_back(std::vector<  std::vector<Tile*>>());
-
 		for (size_t y = 0; y < maxSize.y ; y++)
 		{
-			this->map[x].resize(this->maxSize.y);
-			this->map[x].push_back(std::vector<Tile*>());
+			this->map[x].resize(this->maxSize.y, std::vector<Tile*>());
 
 			for (size_t z = 0; z < this->layers; z++)
 			{
-				this->map[x][y].resize(this->layers);
-				this->map[x][y].push_back(NULL);
-				//this->map[x][y].push_back(new Tile(x * this->gridSizeF , y* this->gridSizeF , this->gridSizeF));
+				this->map[x][y].resize(this->layers, NULL);
 			}
 		}
 	}
+
+	if (this->tileTextureSheet.loadFromFile("Resources/Images/Tiles/grass.png"))
+		std::cout << "ERROR:TILEMAP:FAILED_TO_LOAD_TILE_TEXTURE_SHEET \n";
 }
 
 
@@ -70,7 +70,7 @@ void TileMap::render(sf::RenderTarget & target)
 
 void TileMap::addTile(const unsigned x,const unsigned y, const unsigned z)
 {
-	/*Take two indicies from mouse pos in the grid and add tile to that pos
+	/*Take three indicies from mouse pos in the grid and add tile to that pos
 	if internal tilemap array allows it*/
 
 	if (x < this->maxSize.x &&
@@ -83,13 +83,31 @@ void TileMap::addTile(const unsigned x,const unsigned y, const unsigned z)
 		if (this->map[x][y][z] == NULL)
 		{
 			/*OK to add tile.*/
-			this->map[x][y][z] = new Tile(x * this->gridSizeF , y* this->gridSizeF , this->gridSizeF);
+			this->map[x][y][z] = new Tile(x * this->gridSizeF , y* this->gridSizeF , this->gridSizeF,this->tileTextureSheet);
 			std::cout << "DEBUG: ADDED TILE\n ";
 		}
 	}
 }
 
-void TileMap::removeTile()
+void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 {
+	/*Take three indicies from mouse pos in the grid and remove tile to that pos
+	if internal tilemap array allows it*/
+
+	if (x < this->maxSize.x &&
+		y < this->maxSize.y &&
+		x >= 0 &&
+		y >= 0 &&
+		z < this->layers &&
+		z >= 0)
+	{
+		if (this->map[x][y][z] != NULL)
+		{
+			/*OK to remove tile.*/
+			delete this->map[x][y][z];
+			this->map[x][y][z] = NULL;
+			std::cout << "DEBUG: REMOVED TILE\n ";
+		}
+	}
 
 }

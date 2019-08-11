@@ -9,6 +9,7 @@ private:
 	unsigned layers;
 	sf::Vector2u maxSize;
 	std::vector< std::vector< std::vector<Tile* > > > map; //XYZ coord 
+	sf::Texture tileTextureSheet;
 	//now we can have null pointers in entire map
 
 public:
@@ -20,6 +21,6 @@ public:
 	void render(sf::RenderTarget& target);
 
 	void addTile(const unsigned x, const unsigned y, const unsigned z);
-	void removeTile();
+	void removeTile(const unsigned x, const unsigned y, const unsigned z);
 };
 
