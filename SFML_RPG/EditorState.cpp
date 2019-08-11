@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "EditorState.h"
 
-
-
 //Initializer functions ===========================
 void EditorState::initVariables()
 {
@@ -131,6 +129,15 @@ void EditorState::updateInput(const float & dt)
 
 }
 
+void EditorState::updateEditorInput(const float & dt)
+{
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+	//Add a tile to tilemap
+	{
+		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y,0);
+	}
+}
+
 void EditorState::updateButtons()
 {
 
@@ -161,11 +168,11 @@ void EditorState::update(const float& dt)
 	this->updateMousePositions();
 	this->updateKeytime(dt);
 	this->updateInput(dt);
-	if (!this->paused)//unpaused
+	if (!this->paused)//NOT PAUSED
 	{
 		this->updateButtons();
 		this->updateGui();
-
+		this->updateEditorInput(dt);
 	}
 	else //paused
 	{

@@ -25,7 +25,7 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 			for (size_t z = 0; z < this->layers; z++)
 			{
 				this->map[x][y].resize(this->layers);
-				this->map[x][y].push_back(nullptr);
+				this->map[x][y].push_back(NULL);
 				//this->map[x][y].push_back(new Tile(x * this->gridSizeF , y* this->gridSizeF , this->gridSizeF));
 			}
 		}
@@ -68,9 +68,25 @@ void TileMap::render(sf::RenderTarget & target)
 	}
 }
 
-void TileMap::addTile()
+void TileMap::addTile(const unsigned x,const unsigned y, const unsigned z)
 {
+	/*Take two indicies from mouse pos in the grid and add tile to that pos
+	if internal tilemap array allows it*/
 
+	if (x < this->maxSize.x &&
+		y < this->maxSize.y &&
+		x >= 0 && 
+		y >= 0 &&
+		z < this->layers &&
+		z >= 0)
+	{
+		if (this->map[x][y][z] == NULL)
+		{
+			/*OK to add tile.*/
+			this->map[x][y][z] = new Tile(x * this->gridSizeF , y* this->gridSizeF , this->gridSizeF);
+			std::cout << "DEBUG: ADDED TILE\n ";
+		}
+	}
 }
 
 void TileMap::removeTile()
