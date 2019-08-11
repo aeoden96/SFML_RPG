@@ -9,7 +9,7 @@ private:
 	PauseMenu* pmenu;
 	sf::Font font;
 
-	TileMap map;
+	TileMap *tileMap;
 	//Functions
 
 	void initKeybinds();
@@ -17,6 +17,7 @@ private:
 	void initTextures();
 	void initPlayers();
 	void initPauseMenu();
+	void initTileMap();
 public:
 	GameState(StateData* stateData);
 	virtual ~GameState();

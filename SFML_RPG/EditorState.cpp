@@ -3,7 +3,7 @@
 
 
 
-//Initializer functions
+//Initializer functions ===========================
 void EditorState::initVariables()
 {
 }
@@ -11,11 +11,13 @@ void EditorState::initVariables()
 void EditorState::initBackground()
 {
 }
+
 void EditorState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
 	this->pmenu->addButton("QUIT", 930.f, "Quit");
 }
+
 void EditorState::initFonts()
 {
 
@@ -58,9 +60,29 @@ void EditorState::initKeybinds()
 void EditorState::initButtons()
 {
 
-	std::cout << "\n" << "---EditorState initButtons  ";
+	std::cout << "\n" << "---EditorState initButtons ---empty ";
 	
 }
+
+void EditorState::initGui()
+{
+	this->selectorRect.setSize(
+		sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize)
+	);
+	this->selectorRect.setFillColor(sf::Color::Transparent);
+	this->selectorRect.setOutlineThickness(1.f);
+	this->selectorRect.setOutlineColor(sf::Color::Green);
+
+
+}
+
+void EditorState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+	
+}
+
+//CONSTR/DESTR ========================================
 
 EditorState::EditorState(StateData* stateData)
 	:State(stateData)
@@ -70,8 +92,10 @@ EditorState::EditorState(StateData* stateData)
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
-	this->initButtons();
 	this->initPauseMenu();
+	this->initButtons();
+	this->initGui();
+	this->initTileMap();
 
 
 
@@ -88,7 +112,11 @@ EditorState::~EditorState()
 
 	delete this->pmenu;
 
+	delete this->tileMap;
+
 }
+
+//UPDATE ===============================================
 
 void EditorState::updateInput(const float & dt)
 {
@@ -114,6 +142,14 @@ void EditorState::updateButtons()
 
 }
 
+void EditorState::updateGui()
+{
+	this->selectorRect.setPosition(
+		this->mousePosGrid.x * this->stateData->gridSize, 
+		this->mousePosGrid.y * this->stateData->gridSize
+	);
+}
+
 void EditorState::updatPauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("QUIT"))
@@ -128,6 +164,7 @@ void EditorState::update(const float& dt)
 	if (!this->paused)//unpaused
 	{
 		this->updateButtons();
+		this->updateGui();
 
 	}
 	else //paused
@@ -143,12 +180,19 @@ void EditorState::update(const float& dt)
 
 }
 
+//RENDER===================================================
+
 void EditorState::renderButtons(sf::RenderTarget& target)
 {
 
 	for (auto &it : this->buttons) {
 		it.second->render(target);
 	}
+}
+
+void EditorState::renderGui(sf::RenderTarget & target)
+{
+	target.draw(this->selectorRect);
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -159,8 +203,9 @@ void EditorState::render(sf::RenderTarget* target)
 
 
 	this->renderButtons(*target);
+	this->renderGui(*target);
 
-	this->map.render(*target);
+	this->tileMap->render(*target);
 
 	if (this->paused)//Pause menu render
 	{

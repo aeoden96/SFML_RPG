@@ -8,14 +8,18 @@ private:
 	unsigned gridSizeU;
 	unsigned layers;
 	sf::Vector2u maxSize;
-	std::vector< std::vector< std::vector<Tile> > > map; //XYZ coord
+	std::vector< std::vector< std::vector<Tile* > > > map; //XYZ coord 
+	//now we can have null pointers in entire map
 
 public:
-	TileMap();
+	TileMap(float gridSize,unsigned width,unsigned hight);
 	virtual ~TileMap();
 
 	//Functions 
 	void update();
 	void render(sf::RenderTarget& target);
+
+	void addTile();
+	void removeTile();
 };
 
