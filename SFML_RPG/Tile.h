@@ -8,7 +8,7 @@ private:
 protected:
 	sf::RectangleShape shape;
 public:
-	Tile(float x, float y, float gridSizeF ,sf::Texture& texture);
+	Tile(float x, float y, float gridSizeF ,const sf::Texture& texture, const sf::IntRect& tex_rect);
 	Tile();
 	virtual ~Tile();
 	//Functions

@@ -3,7 +3,7 @@
 
 
 
-Tile::Tile(float x,float y,float gridSizeF, sf::Texture& texture)
+Tile::Tile(float x,float y,float gridSizeF, const sf::Texture& texture, const sf::IntRect& tex_rect)
 {
 	this->shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
 	this->shape.setFillColor(sf::Color::White);
@@ -11,6 +11,8 @@ Tile::Tile(float x,float y,float gridSizeF, sf::Texture& texture)
 	//this->shape.setOutlineColor(sf::Color::Black);
 	//this->shape.setOutlineThickness(1.f);
 	this->shape.setTexture(&texture);
+	this->shape.setTextureRect(tex_rect);
+
 }
 
 Tile::Tile()
