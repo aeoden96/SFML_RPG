@@ -31,6 +31,14 @@ void EditorState::initFonts()
 	}
 }
 
+void EditorState::initText()
+{
+	this->cursorText.setFont(this->font);
+	this->cursorText.setFillColor(sf::Color::White);
+	this->cursorText.setCharacterSize(12);
+	this->cursorText.setPosition(this->mousePosView.x, this->mousePosView.y + 20);
+}
+
 void EditorState::initKeybinds()
 {
 	std::cout << "\n" << "---EditorState initkeyBinds  ";
@@ -72,9 +80,12 @@ void EditorState::initGui()
 	this->selectorRect.setSize(
 		sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize)
 	);
-	this->selectorRect.setFillColor(sf::Color::Transparent);
+	this->selectorRect.setFillColor(sf::Color(255,255,255,150));
 	this->selectorRect.setOutlineThickness(1.f);
 	this->selectorRect.setOutlineColor(sf::Color::Green);
+
+	this->selectorRect.setTexture(this->tileMap->getTileSheet());
+	this->selectorRect.setTextureRect(this->textureRect);
 
 
 }
@@ -94,11 +105,12 @@ EditorState::EditorState(StateData* stateData)
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
+	this->initText(); //we need initFonts for this
 	this->initKeybinds();
 	this->initPauseMenu();
 	this->initButtons();
-	this->initGui();
 	this->initTileMap();
+	this->initGui();// we need initTileMap for this
 
 
 
@@ -171,10 +183,20 @@ void EditorState::updateButtons()
 
 void EditorState::updateGui()
 {
+	//MOUSE-FOLOWING RECTANGLE selectorRect
+	this->selectorRect.setTextureRect(this->textureRect);
+
 	this->selectorRect.setPosition(
 		this->mousePosGrid.x * this->stateData->gridSize, 
 		this->mousePosGrid.y * this->stateData->gridSize
 	);
+
+	//CURSOR TEXT
+	this->cursorText.setPosition(this->mousePosView.x, this->mousePosView.y + 20);
+
+	std::stringstream ss;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->textureRect.left << " " << this->textureRect.top;
+	this->cursorText.setString(ss.str());
 }
 
 void EditorState::updatPauseMenuButtons()
@@ -220,6 +242,7 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 void EditorState::renderGui(sf::RenderTarget & target)
 {
 	target.draw(this->selectorRect);
+	target.draw(this->cursorText);
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -229,24 +252,17 @@ void EditorState::render(sf::RenderTarget* target)
 		target = this->window;
 
 
+	this->tileMap->render(*target);
+
 	this->renderButtons(*target);
 	this->renderGui(*target);
-
-	this->tileMap->render(*target);
 
 	if (this->paused)//Pause menu render
 	{
 		this->pmenu->render(*target);
 	}
-	//REMOVE LATER
-	sf::Text mouseText;
-	mouseText.setPosition(this->mousePosView.x, this->mousePosView.y + 20);
-	mouseText.setFont(this->font);
-	mouseText.setCharacterSize(12);
-	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->textureRect.left << " " << this->textureRect.top;
-	mouseText.setString(ss.str());
-	target->draw(mouseText);
+	
+	
 
 
 

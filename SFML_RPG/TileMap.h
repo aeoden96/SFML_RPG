@@ -7,6 +7,7 @@ private:
 	float gridSizeF;
 	unsigned gridSizeU;
 	unsigned layers;
+	
 	sf::Vector2u maxSize;
 	std::vector< std::vector< std::vector<Tile* > > > map; //XYZ coord 
 	sf::Texture tileTextureSheet;
@@ -15,7 +16,8 @@ private:
 public:
 	TileMap(float gridSize,unsigned width,unsigned hight);
 	virtual ~TileMap();
-
+	//Accessors 
+	const sf::Texture* getTileSheet() const;
 	//Functions 
 	void update();
 	void render(sf::RenderTarget& target);
