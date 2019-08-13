@@ -87,7 +87,7 @@ void EditorState::initGui()
 	this->selectorRect.setTexture(this->tileMap->getTileSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
-
+	this->textureSelector = new gui::TextureSelector(20.f, 20.f,500.f,500.f,this->tileMap->getTileSheet());
 }
 
 void EditorState::initTileMap()
@@ -128,6 +128,8 @@ EditorState::~EditorState()
 	delete this->pmenu;
 
 	delete this->tileMap;
+
+	delete this->textureSelector;
 
 }
 
@@ -192,11 +194,18 @@ void EditorState::updateGui()
 	);
 
 	//CURSOR TEXT
-	this->cursorText.setPosition(this->mousePosView.x, this->mousePosView.y + 20);
+	this->cursorText.setPosition(
+		this->mousePosView.x + 100.f,
+		this->mousePosView.y + 20.f
+	);
 
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->textureRect.left << " " << this->textureRect.top;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" 
+		<< this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n"
+		<< this->textureRect.left << " " << this->textureRect.top;
 	this->cursorText.setString(ss.str());
+
+	this->textureSelector->update();
 }
 
 void EditorState::updatPauseMenuButtons()
@@ -242,6 +251,7 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 void EditorState::renderGui(sf::RenderTarget & target)
 {
 	target.draw(this->selectorRect);
+	this->textureSelector->render(target);
 	target.draw(this->cursorText);
 }
 

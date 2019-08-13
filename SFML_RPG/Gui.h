@@ -76,5 +76,21 @@ namespace gui
 		void render(sf::RenderTarget& target);
 	};
 
+	class TextureSelector 
+	{
+	private:
+		sf::RectangleShape bounds;
+		sf::Sprite sheet;
+	public:
+		TextureSelector(
+			float x, float y,
+			float width, float height,
+			const sf::Texture* textureSheet);
+		~TextureSelector();
+		//Functions
+
+		void update();
+		void render(sf::RenderTarget& target);
+	};
 }
 
