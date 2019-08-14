@@ -81,15 +81,24 @@ namespace gui
 	private:
 		sf::RectangleShape bounds;
 		sf::Sprite sheet;
+		sf::RectangleShape selector;
+		sf::Vector2u mousePosGrid;
+		sf::IntRect textureRect;
+		bool active;
+		float gridSize;
 	public:
 		TextureSelector(
 			float x, float y,
-			float width, float height,
+			float width, float height, float gridSize,
 			const sf::Texture* textureSheet);
 		~TextureSelector();
+		//Accessors
+		const bool& getActive() const;
+		const sf::IntRect& getTextureRect() const;
+
 		//Functions
 
-		void update();
+		void update(const sf::Vector2i& mousePosWindow);
 		void render(sf::RenderTarget& target);
 	};
 }
