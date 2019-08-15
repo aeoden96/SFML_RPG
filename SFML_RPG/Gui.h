@@ -85,12 +85,15 @@ namespace gui
 		sf::Vector2u mousePosGrid;
 		sf::IntRect textureRect;
 		bool active;
+		bool hidden;
+		gui::Button* hideButton;
 		float gridSize;
 	public:
 		TextureSelector(
 			float x, float y,
 			float width, float height, float gridSize,
-			const sf::Texture* textureSheet);
+			const sf::Texture* textureSheet,
+			sf::Font& font,std::string text);
 		~TextureSelector();
 		//Accessors
 		const bool& getActive() const;
