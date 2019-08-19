@@ -64,7 +64,8 @@ void MainMenuState::initButtons()
 {
 
 	std::cout << "\n" << "---MainMenuState initButtons  ";
-	this->buttons["GAME_STATE"]= new gui::Button(60, 60, 150, 50,
+	this->buttons["GAME_STATE"]= new gui::Button(
+		60, 60, 150, 50,
 		&this->font, "New Game",50,
 		sf::Color(150, 150, 150, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
