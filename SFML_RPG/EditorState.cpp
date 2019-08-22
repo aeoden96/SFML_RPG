@@ -20,6 +20,7 @@ void EditorState::initPauseMenu()
 	this->pmenu = new PauseMenu(*this->window, this->font);
 	this->pmenu->addButton("QUIT", 930.f, "Quit");
 	this->pmenu->addButton("SAVE", 800.f, "Save");
+	this->pmenu->addButton("LOAD", 700.f, "Load");
 }
 
 void EditorState::initFonts()
@@ -245,6 +246,9 @@ void EditorState::updatPauseMenuButtons()
 
 	if (this->pmenu->isButtonPressed("SAVE"))
 		this->tileMap->saveToFile("text.slmp");
+
+	if (this->pmenu->isButtonPressed("LOAD"))
+		this->tileMap->loadFromFile("text.slmp");
 }
 
 void EditorState::update(const float& dt)

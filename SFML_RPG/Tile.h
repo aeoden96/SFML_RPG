@@ -12,7 +12,7 @@ protected:
 	bool collision;
 
 public:
-	Tile(float x, float y, float gridSizeF ,const sf::Texture& texture, const sf::IntRect& tex_rect, bool collision = false, short type = TileTypes::DEFAULT);
+	Tile(unsigned grid_x, unsigned grid_y, float gridSizeF ,const sf::Texture& texture, const sf::IntRect& tex_rect, bool collision = false, short type = TileTypes::DEFAULT);
 	Tile();
 	virtual ~Tile();
 	//Functions

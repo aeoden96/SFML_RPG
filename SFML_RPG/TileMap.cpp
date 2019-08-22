@@ -12,8 +12,13 @@ void TileMap::clear()
 				delete this->map[x][y][z];
 				this->map[x][y][z] = NULL;
 			}
+			this->map[x][y].clear();
 		}
+		this->map[x].clear();
 	}
+	this->map.clear();
+
+	
 }
 
 TileMap::TileMap(float gridSize, unsigned width, unsigned height,std::string textureFile)
@@ -92,7 +97,7 @@ void TileMap::addTile(const unsigned x,const unsigned y, const unsigned z,const 
 		if (this->map[x][y][z] == NULL)
 		{
 			/*OK to add tile.*/
-			this->map[x][y][z] = new Tile(x * this->gridSizeF , y* this->gridSizeF , this->gridSizeF,this->tileTextureSheet, tex_rect);
+			this->map[x][y][z] = new Tile(x, y, this->gridSizeF,this->tileTextureSheet, tex_rect);
 			std::cout << "DEBUG: ADDED TILE\n ";
 		}
 	}
@@ -187,7 +192,7 @@ void TileMap::loadFromFile(const std::string fileName)
 		short type = 0;
 
 		//Basics
-		in_file >> size.x >> size.y >> gridSizeU >> layers >> textureFile;
+		in_file >> size.x >> size.y >> gridSize >> layers >> textureFile;
 		
 
 		//Tiles
@@ -197,6 +202,8 @@ void TileMap::loadFromFile(const std::string fileName)
 		this->maxSize.y = size.y;
 		this->layers = layers;
 		this->textureFile = textureFile;
+
+		std::cout << "LOADED " << size.x << " " << size.x << " " << gridSizeU << " " << layers << " " << textureFile << "\n";
 
 		this->clear();
 
@@ -222,7 +229,14 @@ void TileMap::loadFromFile(const std::string fileName)
 		//Load all tiles
 		while (in_file >> x >> y >> z >> trX >> trY >> collision >> type)
 		{
-			//this->map[x][y][z] = new Tile();
+			this->map[x][y][z] = new Tile(
+				x, y,
+				gridSizeF, 
+				this->tileTextureSheet ,
+				sf::IntRect(trX,trY,this->gridSizeU, this->gridSizeU),
+				collision,
+				type);
+			std::cout << "LOADED " << x  << " " << y << "\n";
 		}
 
 	}
