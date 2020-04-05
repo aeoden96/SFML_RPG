@@ -31,9 +31,6 @@ void Game::initStateData()
 
 }
 
-
-
-
 void Game::initWindow()
 {
 	/*Creates SFML window*/
@@ -150,6 +147,8 @@ void Game::update()
 			this->states.pop();
 		}
 	}
+
+
 	//Application end
 	else 
 	{

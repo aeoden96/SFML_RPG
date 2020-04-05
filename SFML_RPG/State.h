@@ -10,10 +10,8 @@ class State;
 class StateData 
 {
 public:
-	StateData()
-	{
+	StateData(){}
 
-	}
 	//Variables
 	float gridSize;
 	sf::RenderWindow* window;
@@ -22,6 +20,15 @@ public:
 	GraphicsSettings* gfxSettings;
 };
 
+/*
+Drži POINTER na 
+		window
+		Stack STATES -> koji sadrži POINTERE na aktivne STATESe
+		stateData
+		Stack supportedKeys
+
+
+*/
 class State
 {
 private:
@@ -31,6 +38,8 @@ protected:
 	std::stack<State*>* states;
 	sf::RenderWindow* window;
 	std::map<std::string, int>* supportedKeys;
+
+
 	std::map<std::string, int> keybinds;
 	bool quit;
 	bool paused;
@@ -42,6 +51,8 @@ protected:
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 	sf::Vector2u mousePosGrid;
+
+	
 
 	//Resources
 	std::map<std::string,sf::Texture> textures;
