@@ -82,7 +82,7 @@ void TileMap::render(sf::RenderTarget & target)
 	}
 }
 
-void TileMap::addTile(const unsigned x,const unsigned y, const unsigned z,const sf::IntRect& tex_rect)
+void TileMap::addTile(const unsigned x,const unsigned y, const unsigned z,const sf::IntRect& tex_rect, const bool& collision, const bool& type)
 {
 	/*Take three indicies from mouse pos in the grid and add tile to that pos
 	if internal tilemap array allows it*/
@@ -97,7 +97,7 @@ void TileMap::addTile(const unsigned x,const unsigned y, const unsigned z,const 
 		if (this->map[x][y][z] == NULL)
 		{
 			/*OK to add tile.*/
-			this->map[x][y][z] = new Tile(x, y, this->gridSizeF,this->tileTextureSheet, tex_rect);
+			this->map[x][y][z] = new Tile(x, y, this->gridSizeF,this->tileTextureSheet, tex_rect, collision, type);
 			std::cout << "DEBUG: ADDED TILE\n ";
 		}
 	}

@@ -27,7 +27,7 @@ public:
 	void saveToFile(const std::string fileName);
 	void loadFromFile(const std::string fileName);
 
-	void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& tex_rect);
+	void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& tex_rect,const bool& collision,const bool& type);
 	void removeTile(const unsigned x, const unsigned y, const unsigned z);
 
 	void update();

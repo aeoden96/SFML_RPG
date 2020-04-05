@@ -14,6 +14,9 @@ class EditorState :
 {
 private:
 	//Variables
+	float cameraSpeed;
+	sf::View view;
+
 	sf::Font font;
 	sf::Text cursorText;
 	PauseMenu* pmenu;
@@ -27,9 +30,15 @@ private:
 
 	gui::TextureSelector* textureSelector;
 
+	bool collision;
+	short type;
+
+
+
 	sf::RectangleShape sidebar;
 
 	//Functions
+	void initView();
 	void initVariables();
 	void initBackground();
 	void initPauseMenu();
